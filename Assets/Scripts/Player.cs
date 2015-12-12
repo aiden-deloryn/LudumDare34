@@ -20,9 +20,6 @@ public class Player : MonoBehaviour, IInputObserver {
 	}
 
 	void Update () {
-//		gameObject.transform.position += new Vector3(moveDirection.x * Time.deltaTime, 
-//		                                             moveDirection.y * Time.deltaTime, 
-//		                                             0f);
 		this.rigidbody.velocity = new Vector2 (moveDirection.x * Time.deltaTime, this.rigidbody.velocity.y);
 	}
 
@@ -53,5 +50,13 @@ public class Player : MonoBehaviour, IInputObserver {
 
 	void OnCollisionEnter2D(Collision2D collision) {
 		jumpsRemaining = maxJumps;
+	}
+
+	public void Grow(float amount) {
+		transform.localScale += new Vector3 (amount / 4, amount / 4, 0f);
+
+		if ((transform.localScale.x + transform.localScale.y) < 1f) {
+			Debug.Log ("GAME OVER");
+		}
 	}
 }
