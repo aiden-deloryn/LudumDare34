@@ -12,10 +12,13 @@ public class Player : MonoBehaviour, IInputObserver {
 	[SerializeField]
 	private GameObject bullet;
 
+	[SerializeField]
+	private GameObject eyes;
+
 	private Rigidbody2D rigidbody;
 	private int jumpsRemaining;
 	private Vector3 moveDirection = Vector3.zero;
-	private float bulletSpeedX = 1000f;
+	private float bulletSpeedX = 1200f;
 	private float bulletSpeedY = 0f;
 	
 	void Start () {
@@ -26,6 +29,22 @@ public class Player : MonoBehaviour, IInputObserver {
 
 	void Update () {
 		this.rigidbody.velocity = new Vector2 (moveDirection.x * Time.deltaTime, this.rigidbody.velocity.y);
+
+		if (moveDirection.x < 0f) {
+			eyes.transform.position = new Vector3 (transform.position.x + (-0.05f * transform.localScale.x), 
+			                                       transform.position.y, 
+			                                       eyes.transform.position.z);
+		} else if (moveDirection.x > 0f) {
+			eyes.transform.position = new Vector3 (transform.position.x + (0.05f * transform.localScale.x), 
+			                                       transform.position.y, 
+			                                       eyes.transform.position.z);
+		} else {
+			eyes.transform.position = new Vector3 (transform.position.x, 
+			                                       transform.position.y, 
+			                                       eyes.transform.position.z);
+		}
+
+		this.rigidbody.gravityScale = 1 + (((transform.localScale.x + transform.localScale.y) / 2) * 0.05f);
 	}
 
 	public void ButtonPressed(InputButton button) {
