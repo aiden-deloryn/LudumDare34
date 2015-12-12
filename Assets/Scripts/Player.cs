@@ -20,9 +20,10 @@ public class Player : MonoBehaviour, IInputObserver {
 	}
 
 	void Update () {
-		gameObject.transform.position += new Vector3(moveDirection.x * Time.deltaTime, 
-		                                             moveDirection.y * Time.deltaTime, 
-		                                             0f);
+//		gameObject.transform.position += new Vector3(moveDirection.x * Time.deltaTime, 
+//		                                             moveDirection.y * Time.deltaTime, 
+//		                                             0f);
+		this.rigidbody.velocity = new Vector2 (moveDirection.x * Time.deltaTime, this.rigidbody.velocity.y);
 	}
 
 	public void ButtonPressed(InputButton button) {
