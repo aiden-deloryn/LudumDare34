@@ -6,7 +6,7 @@ public class Enemy : MonoBehaviour {
 
 	private bool attacking = false;
 	private float lastAttackTime = 0f;
-	private float attackInterval = 2f;
+	private float attackInterval = 1.5f;
 
 	[SerializeField]
 	private GameObject bullet;

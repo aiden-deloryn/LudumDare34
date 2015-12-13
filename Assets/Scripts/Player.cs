@@ -23,6 +23,7 @@ public class Player : MonoBehaviour, IInputObserver {
 	private int jumpsRemaining;
 	private Vector3 moveDirection = Vector3.zero;
 	private float bulletSpeed = 1200f;
+	private bool isDead = false;
 	
 	void Start () {
 		inputManager.AddObserver (this);
@@ -90,6 +91,9 @@ public class Player : MonoBehaviour, IInputObserver {
 	}
 
 	public void Grow(float amount) {
+		if (isDead)
+			return;
+
 		transform.localScale += new Vector3 (amount / 4, amount / 4, 0f);
 		if (amount < 0)
 			GetComponent<AudioSource> ().PlayOneShot (hitSound);
@@ -99,6 +103,7 @@ public class Player : MonoBehaviour, IInputObserver {
 			GameObject.FindGameObjectWithTag("GameOverText").GetComponent<Text>().enabled = true;
 			inputManager.enabled = false;
 			moveDirection = Vector3.zero;
+			isDead = true;
 			StartCoroutine(ReloadLevel());
 		}
 	}
