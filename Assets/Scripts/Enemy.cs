@@ -18,6 +18,9 @@ public class Enemy : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+		if (GameObject.FindGameObjectWithTag ("Player") == null)
+			return;
+
 		if (attacking) {
 			Vector3 playerPos = GameObject.FindGameObjectWithTag ("Player").transform.position;
 			Vector3 eyeDirection = (playerPos - eyes.transform.position).normalized;

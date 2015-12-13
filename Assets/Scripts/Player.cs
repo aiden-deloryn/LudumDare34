@@ -6,6 +6,7 @@ public class Player : MonoBehaviour, IInputObserver {
 	public int maxJumps = 1;
 	public float jumpPower = 200f;
 	public float moveSpeed = 10f;
+	public AudioClip hitSound;
 
 	[SerializeField]
 	private InputManager inputManager;
@@ -85,6 +86,8 @@ public class Player : MonoBehaviour, IInputObserver {
 
 	public void Grow(float amount) {
 		transform.localScale += new Vector3 (amount / 4, amount / 4, 0f);
+		if (amount < 0)
+			GetComponent<AudioSource> ().PlayOneShot (hitSound);
 
 		if ((transform.localScale.x + transform.localScale.y) < 2f) {
 			StartCoroutine(ReloadLevel());

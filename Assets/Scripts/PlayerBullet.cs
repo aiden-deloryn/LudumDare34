@@ -2,6 +2,7 @@
 using System.Collections;
 
 public class PlayerBullet : MonoBehaviour {
+	public AudioClip enemyHitSound;
 
 	// Use this for initialization
 	void Start () {
@@ -17,8 +18,9 @@ public class PlayerBullet : MonoBehaviour {
 		Enemy enemy = other.gameObject.GetComponent<Enemy> ();
 		
 		if (enemy != null) {
-			Destroy(this.gameObject);
+			GetComponent<AudioSource>().PlayOneShot(enemyHitSound);
 			Destroy (enemy.gameObject);
+			Destroy(this.gameObject, 0.1f);
 		}
 	}
 }

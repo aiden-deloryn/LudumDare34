@@ -24,7 +24,8 @@ public class FoodPickup : MonoBehaviour {
 		if (player != null) {
 			//if ((player.transform.localScale.x + player.transform.localScale.y) < (transform.localScale.x + transform.localScale.y)) return;
 			player.Grow(Size);
-			Destroy (this.gameObject);
+			this.GetComponent<AudioSource>().Play();
+			Destroy (this.gameObject, 0.1f);
 		}
 	}
 }

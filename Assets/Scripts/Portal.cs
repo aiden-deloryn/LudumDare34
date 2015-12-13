@@ -28,8 +28,10 @@ public class Portal : MonoBehaviour {
 		scoreText.text = "Score: " + Mathf.Floor(player.transform.localScale.x + player.transform.localScale.y).ToString();
 
 		GameObject.Find ("InputManager").GetComponent<InputManager> ().enabled = false;
-		Camera.main.GetComponent<SmoothFollowObject> ().enabled = false;
+		Camera.main.GetComponent<SmoothFollowObject> ().target = this.gameObject;
 		Destroy (player.gameObject);
+
+		GetComponent<AudioSource> ().Play ();
 
 		StartCoroutine (LoadNextLevel ());
 	}
