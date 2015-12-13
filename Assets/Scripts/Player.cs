@@ -8,6 +8,7 @@ public class Player : MonoBehaviour, IInputObserver {
 	public float moveSpeed = 10f;
 	public AudioClip hitSound;
 	public AudioClip jumpSound;
+	public AudioClip gameOverSound;
 
 	[SerializeField]
 	private InputManager inputManager;
@@ -94,10 +95,11 @@ public class Player : MonoBehaviour, IInputObserver {
 			GetComponent<AudioSource> ().PlayOneShot (hitSound);
 
 		if ((transform.localScale.x + transform.localScale.y) < 2f) {
-			StartCoroutine(ReloadLevel());
+			GetComponent<AudioSource> ().PlayOneShot (gameOverSound);
 			GameObject.FindGameObjectWithTag("GameOverText").GetComponent<Text>().enabled = true;
 			inputManager.enabled = false;
 			moveDirection = Vector3.zero;
+			StartCoroutine(ReloadLevel());
 		}
 	}
 
