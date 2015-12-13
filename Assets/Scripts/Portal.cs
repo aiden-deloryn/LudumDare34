@@ -25,7 +25,9 @@ public class Portal : MonoBehaviour {
 
 		levelCompleteText.enabled = true;
 		scoreText.enabled = true;
-		scoreText.text = "Score: " + Mathf.Floor(player.transform.localScale.x + player.transform.localScale.y).ToString();
+		float score = Mathf.Floor (player.transform.localScale.x + player.transform.localScale.y);
+		scoreText.text = "Score: " + score.ToString ();
+		Score.score += score;
 
 		GameObject.Find ("InputManager").GetComponent<InputManager> ().enabled = false;
 		Camera.main.GetComponent<SmoothFollowObject> ().target = this.gameObject;
