@@ -7,6 +7,7 @@ public class Player : MonoBehaviour, IInputObserver {
 	public float jumpPower = 200f;
 	public float moveSpeed = 10f;
 	public AudioClip hitSound;
+	public AudioClip jumpSound;
 
 	[SerializeField]
 	private InputManager inputManager;
@@ -57,7 +58,10 @@ public class Player : MonoBehaviour, IInputObserver {
 			moveDirection += new Vector3(moveSpeed, 0f, 0f);
 			break;
 		case InputButton.Jump:
-			if (jumpsRemaining-- > 0) this.rigidbody.AddForce(new Vector2(0f, jumpPower));
+			if (jumpsRemaining-- > 0) { 
+				this.rigidbody.AddForce(new Vector2(0f, jumpPower));
+				GetComponent<AudioSource> ().PlayOneShot (jumpSound);
+			}
 			break;
 
 		case InputButton.ShootUp:
