@@ -87,7 +87,7 @@ public class Player : MonoBehaviour, IInputObserver {
 		transform.localScale += new Vector3 (amount / 4, amount / 4, 0f);
 
 		if ((transform.localScale.x + transform.localScale.y) < 2f) {
-			Debug.Log ("GAME OVER");
+			StartCoroutine(ReloadLevel());
 			GameObject.FindGameObjectWithTag("GameOverText").GetComponent<Text>().enabled = true;
 			inputManager.enabled = false;
 			moveDirection = Vector3.zero;
@@ -115,5 +115,10 @@ public class Player : MonoBehaviour, IInputObserver {
 
 		Destroy (bullet, 3);
 		Grow (-2);
+	}
+
+	private IEnumerator ReloadLevel() {
+		yield return new WaitForSeconds (5f);
+		Application.LoadLevel (Application.loadedLevel);
 	}
 }

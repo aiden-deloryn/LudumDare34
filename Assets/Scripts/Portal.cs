@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
 
 public class Portal : MonoBehaviour {
 	public string linkedLevel = "";
@@ -18,10 +19,23 @@ public class Portal : MonoBehaviour {
 		if (other.gameObject.GetComponent<Player> () == null)
 			return;
 
-		if (linkedLevel == "") {
-			// game completed
-		} else {
-			Application.LoadLevel (linkedLevel);
-		}
+		Text levelCompleteText = GameObject.FindGameObjectWithTag("LevelCompleteText").GetComponent<Text>();
+		Text scoreText = GameObject.FindGameObjectWithTag("LevelScoreText").GetComponent<Text>();
+		GameObject player = GameObject.FindGameObjectWithTag("Player");
+
+		levelCompleteText.enabled = true;
+		scoreText.enabled = true;
+		scoreText.text = "Score: " + Mathf.Floor(player.transform.localScale.x + player.transform.localScale.y).ToString();
+
+		GameObject.Find ("InputManager").GetComponent<InputManager> ().enabled = false;
+		Camera.main.GetComponent<SmoothFollowObject> ().enabled = false;
+		Destroy (player.gameObject);
+
+		StartCoroutine (LoadNextLevel ());
+	}
+
+	IEnumerator LoadNextLevel() {
+		yield return new WaitForSeconds (5.0f);
+		Application.LoadLevel (linkedLevel);
 	}
 }
