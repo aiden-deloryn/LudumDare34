@@ -20,6 +20,7 @@ public class Enemy : MonoBehaviour {
 			GameObject bulletInstance = Instantiate (bullet) as GameObject;
 			bulletInstance.transform.position = transform.position;
 			bulletInstance.GetComponent<EnemyBullet>().Target = MultiTags.FindGameObjectWithTag(Tag.Player);
+			Destroy (bulletInstance, 3f);
 			lastAttackTime = Time.realtimeSinceStartup;
 		}
 	}
@@ -28,7 +29,6 @@ public class Enemy : MonoBehaviour {
 		Player player = other.gameObject.GetComponent<Player> ();
 
 		if (player != null) {
-			Debug.Log("Saw player");
 			attacking = true;
 		}
 	}
@@ -37,7 +37,6 @@ public class Enemy : MonoBehaviour {
 		Player player = other.gameObject.GetComponent<Player> ();
 		
 		if (player != null) {
-			Debug.Log("Lost player");
 			attacking = false;
 		}
 	}

@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
 
 public class Player : MonoBehaviour, IInputObserver {
 	public int maxJumps = 1;
@@ -87,6 +88,7 @@ public class Player : MonoBehaviour, IInputObserver {
 
 		if ((transform.localScale.x + transform.localScale.y) < 2f) {
 			Debug.Log ("GAME OVER");
+			GameObject.FindGameObjectWithTag("GameOverText").GetComponent<Text>().enabled = true;
 			inputManager.enabled = false;
 			moveDirection = Vector3.zero;
 		}
