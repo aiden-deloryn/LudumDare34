@@ -18,8 +18,7 @@ public class Player : MonoBehaviour, IInputObserver {
 	private Rigidbody2D rigidbody;
 	private int jumpsRemaining;
 	private Vector3 moveDirection = Vector3.zero;
-	private float bulletSpeedX = 1200f;
-	private float bulletSpeedY = 0f;
+	private float bulletSpeed = 1200f;
 	
 	void Start () {
 		inputManager.AddObserver (this);
@@ -44,7 +43,7 @@ public class Player : MonoBehaviour, IInputObserver {
 			                                       eyes.transform.position.z);
 		}
 
-		this.rigidbody.gravityScale = 1 + (((transform.localScale.x + transform.localScale.y) / 2) * 0.05f);
+		this.rigidbody.gravityScale = 1 + (((transform.localScale.x + transform.localScale.y) / 2) * 0.02f);
 	}
 
 	public void ButtonPressed(InputButton button) {
@@ -59,8 +58,11 @@ public class Player : MonoBehaviour, IInputObserver {
 			if (jumpsRemaining-- > 0) this.rigidbody.AddForce(new Vector2(0f, jumpPower));
 			break;
 
-		case InputButton.Shoot:
-			Shoot();
+		case InputButton.ShootUp:
+		case InputButton.ShootDown:
+		case InputButton.ShootLeft:
+		case InputButton.ShootRight:
+			Shoot(button);
 			break;
 		}
 	}
@@ -90,22 +92,23 @@ public class Player : MonoBehaviour, IInputObserver {
 		}
 	}
 
-	void Shoot() {
+	void Shoot(InputButton button) {
 		GameObject bullet = Instantiate(this.bullet);
 		bullet.transform.position = transform.position;
 
-		if (moveDirection.x < 0) {
-			bullet.GetComponent<Rigidbody2D> ().AddForce (new Vector2 (-bulletSpeedX, bulletSpeedY));
-		} else if (moveDirection.x > 0) {
-			bullet.GetComponent<Rigidbody2D> ().AddForce (new Vector2 (bulletSpeedX, bulletSpeedY));
-		} else {
-			GameObject bullet2 = Instantiate(this.bullet);
-			bullet2.transform.position = transform.position;
-
-			bullet.GetComponent<Rigidbody2D> ().AddForce (new Vector2 (-bulletSpeedX, bulletSpeedY));
-			bullet2.GetComponent<Rigidbody2D> ().AddForce (new Vector2 (bulletSpeedX, bulletSpeedY));
-			Destroy (bullet2, 3);
-			Grow (-2);
+		switch (button) {
+		case InputButton.ShootUp:
+			bullet.GetComponent<Rigidbody2D> ().AddForce (new Vector2 (0f, bulletSpeed));
+			break;
+		case InputButton.ShootDown:
+			bullet.GetComponent<Rigidbody2D> ().AddForce (new Vector2 (0f, -bulletSpeed));
+			break;
+		case InputButton.ShootLeft:
+			bullet.GetComponent<Rigidbody2D> ().AddForce (new Vector2 (-bulletSpeed, 0f));
+			break;
+		case InputButton.ShootRight:
+			bullet.GetComponent<Rigidbody2D> ().AddForce (new Vector2 (bulletSpeed, 0f));
+			break;
 		}
 
 		Destroy (bullet, 3);

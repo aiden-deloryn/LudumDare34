@@ -8,7 +8,10 @@ public enum InputButton {
 	Left,
 	Right,
 	Jump,
-	Shoot
+	ShootUp,
+	ShootDown,
+	ShootLeft,
+	ShootRight
 }
 
 public class InputManager : MonoBehaviour {
@@ -23,52 +26,52 @@ public class InputManager : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		// UP
-		if (Input.GetKeyDown (KeyCode.W) || Input.GetKeyDown (KeyCode.UpArrow)) {
+		if (Input.GetKeyDown (KeyCode.W)) {
 			foreach (IInputObserver observer in observers) {
 				observer.ButtonPressed(InputButton.Up);
 			}
 		}
 
-		if (Input.GetKeyUp (KeyCode.W) || Input.GetKeyUp (KeyCode.UpArrow)) {
+		if (Input.GetKeyUp (KeyCode.W)) {
 			foreach (IInputObserver observer in observers) {
 				observer.ButtonReleased (InputButton.Up);
 			}
 		}
 
 		// DOWN
-		if (Input.GetKeyDown (KeyCode.S) || Input.GetKeyDown (KeyCode.DownArrow)) {
+		if (Input.GetKeyDown (KeyCode.S)) {
 			foreach (IInputObserver observer in observers) {
 				observer.ButtonPressed(InputButton.Down);
 			}
 		}
 		
-		if (Input.GetKeyUp (KeyCode.S) || Input.GetKeyUp (KeyCode.DownArrow)) {
+		if (Input.GetKeyUp (KeyCode.S)) {
 			foreach (IInputObserver observer in observers) {
 				observer.ButtonReleased (InputButton.Down);
 			}
 		}
 
 		// LEFT
-		if (Input.GetKeyDown (KeyCode.A) || Input.GetKeyDown (KeyCode.LeftArrow)) {
+		if (Input.GetKeyDown (KeyCode.A)) {
 			foreach (IInputObserver observer in observers) {
 				observer.ButtonPressed(InputButton.Left);
 			}
 		}
 		
-		if (Input.GetKeyUp (KeyCode.A) || Input.GetKeyUp (KeyCode.LeftArrow)) {
+		if (Input.GetKeyUp (KeyCode.A)) {
 			foreach (IInputObserver observer in observers) {
 				observer.ButtonReleased (InputButton.Left);
 			}
 		}
 
 		// RIGHT
-		if (Input.GetKeyDown (KeyCode.D) || Input.GetKeyDown (KeyCode.RightArrow)) {
+		if (Input.GetKeyDown (KeyCode.D)) {
 			foreach (IInputObserver observer in observers) {
 				observer.ButtonPressed(InputButton.Right);
 			}
 		}
 		
-		if (Input.GetKeyUp (KeyCode.D) || Input.GetKeyUp (KeyCode.RightArrow)) {
+		if (Input.GetKeyUp (KeyCode.D)) {
 			foreach (IInputObserver observer in observers) {
 				observer.ButtonReleased (InputButton.Right);
 			}
@@ -87,16 +90,55 @@ public class InputManager : MonoBehaviour {
 			}
 		}
 
-		// SHOOT
-		if (Input.GetKeyDown (KeyCode.LeftShift) || Input.GetKeyDown (KeyCode.RightShift)) {
+		// SHOOT UP
+		if (Input.GetKeyDown (KeyCode.UpArrow)) {
 			foreach (IInputObserver observer in observers) {
-				observer.ButtonPressed (InputButton.Shoot);
+				observer.ButtonPressed(InputButton.ShootUp);
+			}
+		}
+
+		if (Input.GetKeyUp (KeyCode.UpArrow)) {
+			foreach (IInputObserver observer in observers) {
+				observer.ButtonReleased(InputButton.ShootUp);
+			}
+		}
+
+		// SHOOT DOWN
+		if (Input.GetKeyDown (KeyCode.DownArrow)) {
+			foreach (IInputObserver observer in observers) {
+				observer.ButtonPressed(InputButton.ShootDown);
 			}
 		}
 		
-		if (Input.GetKeyUp (KeyCode.LeftShift) || Input.GetKeyUp (KeyCode.RightShift)) {
+		if (Input.GetKeyUp (KeyCode.DownArrow)) {
 			foreach (IInputObserver observer in observers) {
-				observer.ButtonReleased (InputButton.Shoot);
+				observer.ButtonReleased(InputButton.ShootDown);
+			}
+		}
+
+		// SHOOT LEFT
+		if (Input.GetKeyDown (KeyCode.LeftArrow)) {
+			foreach (IInputObserver observer in observers) {
+				observer.ButtonPressed(InputButton.ShootLeft);
+			}
+		}
+		
+		if (Input.GetKeyUp (KeyCode.LeftArrow)) {
+			foreach (IInputObserver observer in observers) {
+				observer.ButtonReleased(InputButton.ShootLeft);
+			}
+		}
+
+		// SHOOT RIGHT
+		if (Input.GetKeyDown (KeyCode.RightArrow)) {
+			foreach (IInputObserver observer in observers) {
+				observer.ButtonPressed(InputButton.ShootRight);
+			}
+		}
+		
+		if (Input.GetKeyUp (KeyCode.RightArrow)) {
+			foreach (IInputObserver observer in observers) {
+				observer.ButtonReleased(InputButton.ShootRight);
 			}
 		}
 	}

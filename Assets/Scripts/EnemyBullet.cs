@@ -4,7 +4,7 @@ using System.Collections;
 public class EnemyBullet : MonoBehaviour {
 	private GameObject target;
 	private Vector3 direction = Vector3.zero;
-	private float speedModifier = 0.2f;
+	private float speedModifier = 0.3f;
 
 	float Size {
 		get {
